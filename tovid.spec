@@ -1,6 +1,6 @@
 %define name	tovid
-%define version	0.28
-%define release %mkrel 2
+%define version	0.30
+%define release %mkrel 1
 
 %define title ToVid
 %define longtitle Video disc creator
@@ -17,8 +17,11 @@ Group:		Video
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	ImageMagick
 BuildRequires:	python
+BuildRequires:	txt2tags
+BuildRequires:	desktop-file-utils
 Requires:	python
 Requires:	wxPythonGTK
+Requires:	wxpython2.6
 Requires:	mplayer mencoder
 Requires:	mjpegtools
 Requires:	ImageMagick
@@ -46,32 +49,6 @@ Note: Some features will be unavailable unless you also install the
 rm -rf $RPM_BUILD_ROOT
 %makeinstall_std
 
-#menu
-mkdir -p $RPM_BUILD_ROOT%{_menudir}
-cat << EOF > $RPM_BUILD_ROOT%{_menudir}/%{name}
-?package(%{name}): command="%{name}gui" \
-		   icon="%{name}.png" \
-                   needs="x11"  \
-                   title="%{title}" \
-                   longtitle="%{longtitle}" \
-                   section="Multimedia/Video"\
-		   xdg="true"		
-EOF
-
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-%{name}.desktop << EOF
-[Desktop Entry]
-Encoding=UTF-8
-Name=%{title}
-Comment=%{longtitle}
-Exec=%{_bindir}/%{name}gui
-Icon=%{name}
-Terminal=false
-Type=Application
-StartupNotify=true
-Categories=QT;Video;Player;X-MandrivaLinux-Multimedia-Video;
-EOF
-
 #icons
 mkdir -p $RPM_BUILD_ROOT/%_liconsdir
 cp icons/tovid_icon_48.png $RPM_BUILD_ROOT/%_liconsdir/%name.png
@@ -80,11 +57,24 @@ cp icons/tovid_icon_32.png $RPM_BUILD_ROOT/%_iconsdir/%name.png
 mkdir -p $RPM_BUILD_ROOT/%_miconsdir
 convert -size 16x16 icons/tovid_icon_32.png $RPM_BUILD_ROOT/%_miconsdir/%name.png
 
+mv $RPM_BUILD_ROOT/%_iconsdir/hicolor/128x128/apps/%{name}_icon_128.png $RPM_BUILD_ROOT/%_iconsdir/hicolor/128x128/apps/%name.png
+mv $RPM_BUILD_ROOT/%_iconsdir/hicolor/64x64/apps/%{name}_icon_64.png $RPM_BUILD_ROOT/%_iconsdir/hicolor/64x64/apps/%name.png
+mv $RPM_BUILD_ROOT/%_iconsdir/hicolor/48x48/apps/%{name}_icon_48.png $RPM_BUILD_ROOT/%_iconsdir/hicolor/48x48/apps/%name.png
+mv $RPM_BUILD_ROOT/%_iconsdir/hicolor/32x32/apps/%{name}_icon_32.png $RPM_BUILD_ROOT/%_iconsdir/hicolor/32x32/apps/%name.png
+
+desktop-file-install --vendor="" \
+  --add-category="X-MandrivaLinux-Multimedia-Video" \
+  --dir $RPM_BUILD_ROOT%{_datadir}/applications $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
+
+perl -pi -e 's,tovid.svg,tovid,g' $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
+
 %post
 %update_menus
+%update_icon_cache hicolor
 
 %postun
 %clean_menus
+%clean_icon_cache hicolor
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -94,12 +84,13 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog NEWS README
 %{_bindir}/*
 %{_mandir}/man1/*
-%_datadir/applications/mandriva-%{name}.desktop
-%{python_sitelib}/libtovid
-%{_menudir}/%name
+%{_datadir}/applications/*.desktop
+%{py_puresitedir}/libtovid
 %{_liconsdir}/%name.png
 %{_iconsdir}/%name.png
 %{_miconsdir}/%name.png
-
-
-
+%{_iconsdir}/hicolor/scalable/apps/*.svg
+%{_iconsdir}/hicolor/128x128/apps/%name.png
+%{_iconsdir}/hicolor/64x64/apps/%name.png
+%{_iconsdir}/hicolor/48x48/apps/%name.png
+%{_iconsdir}/hicolor/32x32/apps/%name.png
