@@ -1,6 +1,6 @@
 %define name	tovid
 %define version	0.30
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define title ToVid
 %define longtitle Video disc creator
@@ -11,6 +11,9 @@ Version: 	%{version}
 Release: 	%{release}
 
 Source:		%{name}-%{version}.tar.bz2
+# Official upstream patches for various bugs: http://www.createphpbb.com/tovid/viewtopic.php?t=242
+Patch0:		todiscgui.diff
+Patch1:		tovid-0.30.2.patch
 URL:		http://tovid.sourceforge.net/
 License:	GPL
 Group:		Video
@@ -41,6 +44,8 @@ Note: Some features will be unavailable unless you also install the
 
 %prep
 %setup -q
+%patch0 -p0 -b .hidden
+%patch1 -p1 -b .ffmpeg
 
 %build
 %configure2_5x
