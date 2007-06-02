@@ -48,6 +48,14 @@ Note: Some features will be unavailable unless you also install the
 %patch1 -p1 -b .ffmpeg
 
 %build
+# The upstream build incorrectly uses pyexecdir instead of pythondir.
+# This will result in installation to /usr/lib64 on an x86-64 machine.
+# The app contains only pure python files, so should install to /usr/lib
+# on all archs. To achieve this, we replace pyexecdir with pythondir in
+# Makefile.am and re-generate the Makefile.
+perl -pi -e 's,pyexec,python,g' Makefile.am
+aclocal
+automake
 %configure2_5x
 
 %install
