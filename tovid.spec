@@ -32,6 +32,7 @@ Requires:	ffmpeg
 Requires:	dvdauthor
 Requires:	vcdimager
 Requires:	dvd+rw-tools
+Requires:	cdrdao
 BuildArch:	noarch
 Provides:	%name-gui
 
