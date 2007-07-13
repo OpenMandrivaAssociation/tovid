@@ -1,6 +1,6 @@
 %define name	tovid
 %define version	0.30
-%define release %mkrel 3
+%define release %mkrel 4
 
 %define title ToVid
 %define longtitle Video disc creator
@@ -33,6 +33,8 @@ Requires:	dvdauthor
 Requires:	vcdimager
 Requires:	dvd+rw-tools
 Requires:	cdrdao
+# for todiscgui, bug #31895
+Requires:	tkinter
 BuildArch:	noarch
 Provides:	%name-gui
 
