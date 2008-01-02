@@ -15,6 +15,7 @@ Source:		http://tovid.googlecode.com/files/%{name}-%{version}.tar.gz
 URL:		http://tovid.sourceforge.net/
 License:	GPLv2+
 Group:		Video
+BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	ImageMagick
 BuildRequires:	python
 BuildRequires:	txt2tags
