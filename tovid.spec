@@ -55,13 +55,17 @@ rm -rf $RPM_BUILD_ROOT
 
 perl -pi -e 's,tovid.svg,tovid,g' $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 
+%if %mdkversion < 200900
 %post
 %update_menus
 %update_icon_cache hicolor
+%endif
 
+%if %mdkversion < 200900
 %postun
 %clean_menus
 %clean_icon_cache hicolor
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
