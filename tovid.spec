@@ -1,6 +1,6 @@
 %define name	tovid
 %define version	0.31
-%define release %mkrel 3
+%define release %mkrel 4
 
 %define title ToVid
 %define longtitle Video disc creator
