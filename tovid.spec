@@ -16,7 +16,7 @@ URL:		http://tovid.sourceforge.net/
 License:	GPLv2+
 Group:		Video
 BuildRoot:	%{_tmppath}/%{name}-buildroot
-BuildRequires:	ImageMagick
+BuildRequires:	imagemagick
 BuildRequires:	python
 BuildRequires:	txt2tags
 BuildRequires:	desktop-file-utils
@@ -25,7 +25,7 @@ Requires:	wxPythonGTK
 Requires:	wxpython2.6
 Requires:	mplayer mencoder
 Requires:	mjpegtools
-Requires:	ImageMagick
+Requires:	imagemagick
 Requires:	ffmpeg
 Requires:	dvdauthor
 Requires:	vcdimager
