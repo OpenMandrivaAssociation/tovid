@@ -1,6 +1,6 @@
 %define name	tovid
 %define version	0.31
-%define release %mkrel 4
+%define release %mkrel 5
 
 %define title ToVid
 %define longtitle Video disc creator
@@ -11,7 +11,13 @@ Version: 	%{version}
 Release: 	%{release}
 
 Source:		http://tovid.googlecode.com/files/%{name}-%{version}.tar.gz
-# Official upstream patches for various bugs: http://www.createphpbb.com/tovid/viewtopic.php?t=242
+# From upstream SVN, re-diffed: allow wx 2.8 as well as 2.6 - AdamW
+# 2008/12
+Patch0:		tovid-0.31-wx28.patch
+# From http://code.google.com/p/tovid/issues/detail?id=20 , can't give
+# credit as author's name is obfuscated: fix initial layout of tovidgui
+# window with wx 2.8 - AdamW 2008/12
+Patch1:		tovid-0.31-frames.patch
 URL:		http://tovid.sourceforge.net/
 License:	GPLv2+
 Group:		Video
@@ -22,7 +28,6 @@ BuildRequires:	txt2tags
 BuildRequires:	desktop-file-utils
 Requires:	python
 Requires:	wxPythonGTK
-Requires:	wxpython2.6
 Requires:	mplayer mencoder
 Requires:	mjpegtools
 Requires:	imagemagick
@@ -45,6 +50,8 @@ Note: Some features will be unavailable unless you also install the
 
 %prep
 %setup -q
+%patch0 -p1 -b .wx28
+%patch1 -p1 -b .frames
 
 %build
 %configure2_5x
