@@ -7,7 +7,7 @@ Version:	0.34
 Release:	3
 
 Source:		http://tovid.googlecode.com/files/%{name}-%{version}.tar.gz
-URL:		http://tovid.sourceforge.net/
+URL:		https://tovid.sourceforge.net/
 License:	GPLv2+
 Group:		Video
 BuildRequires:	imagemagick
